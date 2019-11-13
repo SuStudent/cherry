@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: auth
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        format: YAML
+        watch:
+          enabled: true
+encrypt:
+  key-store:
+    location: classpath:/jwt.jks
+    alias: jwt
+    password: cherry
+logging:
+  level:
+    root: info

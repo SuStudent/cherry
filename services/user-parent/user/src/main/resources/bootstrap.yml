@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: user
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        format: YAML
+        watch:
+          enabled: true
