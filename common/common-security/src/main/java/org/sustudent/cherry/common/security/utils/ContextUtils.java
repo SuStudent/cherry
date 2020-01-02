@@ -1,11 +1,11 @@
-package org.sustudent.cherry.common.core.utils;
+package org.sustudent.cherry.common.security.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.sustudent.cherry.common.core.model.CherryUser;
+import org.sustudent.cherry.common.security.model.CherryUser;
 
 @Component
 public class ContextUtils implements ApplicationContextAware {

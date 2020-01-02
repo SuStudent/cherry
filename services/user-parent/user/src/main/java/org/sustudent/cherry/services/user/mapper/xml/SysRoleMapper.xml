@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.sustudent.cherry.services.user.mapper.SysRoleMapper">
+  <select
+    id="findPage"
+    resultType="org.sustudent.cherry.services.user.entity.SysRole">
+      SELECT
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        deleted,
+        NAME,
+        attribute,
+        description
+      FROM
+        sys_role
+      WHERE
+        deleted = 0
+        <if test="role.name != null and role.name != ''">
+          AND NAME like concat('%',#{role.name},'%')
+        </if>
+  </select>
+  <select
+    id="checkField"
+    resultType="boolean">
+      SELECT
+        if(count(1) = 0,1,0)
+      FROM
+        sys_role
+      WHERE
+        deleted = 0
+        <if test="id != null and id != 0">
+          and id != #{id}
+        </if>
+        <if test="name != null and name != ''">
+          and name = #{name}
+        </if>
+        <if test="attribute != null and attribute != ''">
+          and attribute = #{attribute}
+        </if>
+  </select>
+</mapper>

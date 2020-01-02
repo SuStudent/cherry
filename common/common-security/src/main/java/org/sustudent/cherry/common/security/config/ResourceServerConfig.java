@@ -5,16 +5,17 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.sustudent.cherry.common.security.properties.SecurityIgnoreProperties;
 
 
@@ -29,6 +30,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Autowired
   private CherryAuthenticationEntryPoint cherryAuthenticationEntryPoint;
+
+  @Autowired(required = false)
+  private URLSecurityMetadataSource urlSecurityMetadataSource;
+
+  @Autowired(required = false)
+  private CherryAccessDecisionManager cherryAccessDecisionManager;
 
 
   @Override
@@ -64,12 +71,31 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     String[] ignoresUrls = securityIgnoreProperties.getUrls()
         .toArray(new String[securityIgnoreProperties.getUrls().size()]);
-    http.httpBasic().disable()
-        .csrf().disable()
+    http
+        .httpBasic()
+        .disable()
+        .csrf()
+        .disable()
         .authorizeRequests()
         .antMatchers(ignoresUrls)
         .permitAll()
-        .anyRequest().authenticated().and()
-        .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        .anyRequest()
+        .authenticated()
+        .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+          @Override
+          public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+            // 使用自定义的元数据
+            if (urlSecurityMetadataSource != null) {
+              object.setSecurityMetadataSource(urlSecurityMetadataSource);
+            }
+            // 使用自定义的决策器
+            if (cherryAccessDecisionManager != null) {
+              object.setAccessDecisionManager(cherryAccessDecisionManager);
+            }
+            return object;
+          }
+        })
+        .and()
+        .exceptionHandling().accessDeniedHandler(new CherryAccessDeniedHandler());
   }
 }

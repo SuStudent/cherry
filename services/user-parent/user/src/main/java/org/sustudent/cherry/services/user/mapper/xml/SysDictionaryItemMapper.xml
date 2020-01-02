@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.sustudent.cherry.services.user.mapper.SysDictionaryItemMapper">
+  <select
+    id="findDictItems"
+    resultType="org.sustudent.cherry.services.user.entity.SysDictionaryItem">
+    SELECT
+      id,
+      label,
+      `value`,
+      enabled,
+      sort,
+      dictionary_id,
+      create_by,
+      create_time,
+      update_by,
+      update_time,
+      deleted
+    FROM
+      sys_dictionary_item
+    WHERE
+      deleted = 0
+      <if test="dictionaryId != null">
+        and dictionary_id=#{dictionaryId}
+      </if>
+  </select>
+</mapper>

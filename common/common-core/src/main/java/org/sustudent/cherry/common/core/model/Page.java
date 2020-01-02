@@ -21,7 +21,7 @@ public class Page<T> implements Serializable {
   private int pageCount;
 
   public Page() {
-    new Page(10,1);
+    new Page(20,1);
   }
 
   public Page(int pageSize, int pageNo) {

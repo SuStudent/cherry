@@ -2,12 +2,13 @@ package org.sustudent.cherry.services.auth.token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import java.io.IOException;
 import java.util.Map;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.sustudent.cherry.common.core.model.CherryUser;
+import org.sustudent.cherry.common.security.model.CherryUser;
 
 /**
  * @author yiyi.su
@@ -60,5 +61,15 @@ public class CherryJwtAccessTokenConverter extends JwtAccessTokenConverter {
       e.printStackTrace();
     }
     return user;
+  }
+
+  public static void main(String[] args) {
+    Map<String,Object> a = Maps.newHashMap();
+
+    a.put("a","a");
+    a.put("b","b");
+    a.put("c","c");
+
+    a.values();
   }
 }

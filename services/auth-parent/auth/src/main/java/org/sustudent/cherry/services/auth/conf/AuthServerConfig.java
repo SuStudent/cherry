@@ -6,6 +6,7 @@ import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
@@ -16,7 +17,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
@@ -71,7 +71,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
         .exceptionTranslator(e -> {
           if (e instanceof OAuth2Exception) {
             OAuth2Exception oAuth2Exception = (OAuth2Exception) e;
-            return ResponseEntity.status(oAuth2Exception.getHttpErrorCode())
+            return ResponseEntity.status(HttpStatus.OK)
                 .body(new CherryOauthException(oAuth2Exception.getMessage(),
                     oAuth2Exception.getHttpErrorCode()));
           } else {

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.sustudent.cherry.common.core.persistence.BaseEntity;
 import org.sustudent.cherry.common.core.repository.BaseMapper;
-import org.sustudent.cherry.common.core.utils.ContextUtils;
+import org.sustudent.cherry.common.security.utils.ContextUtils;
 import tk.mybatis.mapper.entity.Example;
 
 /**

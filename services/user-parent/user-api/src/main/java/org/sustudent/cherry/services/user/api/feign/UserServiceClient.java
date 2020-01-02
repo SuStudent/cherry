@@ -4,9 +4,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.sustudent.cherry.common.core.constant.ServiceContants;
-import org.sustudent.cherry.common.core.model.CherryUser;
 import org.sustudent.cherry.common.core.model.ResponseResult;
-import org.sustudent.cherry.services.user.api.entity.SysUser;
+import org.sustudent.cherry.common.security.model.CherryUser;
 
 /**
  * @author yiyi.su
@@ -20,10 +19,6 @@ public interface UserServiceClient {
 
 
   @GetMapping("/sysUser/findUserByUsername")
-  ResponseResult<SysUser> findUserByUsername(@RequestParam String username);
+  ResponseResult<CherryUser> findUserByUsername(@RequestParam String username);
 
-
-
-  @GetMapping("/sysUser/test")
-  ResponseResult<String> test();
 }
