@@ -27,7 +27,7 @@ public class SysResourceController extends BaseController {
   private SysResourceService resourceService;
 
   @GetMapping("/findCurrentUserResource")
-  public ResponseResult<List<SysResource>> findCurrentUserResource(){
+  public ResponseResult<List<SysResource>> findCurrentUserResource() {
     return ResponseResult.success(resourceService.findCurrentUserResource());
   }
 }

@@ -31,7 +31,7 @@ public class ResourceSecurityMetadataSource implements SecurityMetadataSource {
     Collection<CherryConfigAttribute> configAttributes = resourceMetadataSourceService
         .getAttribute().get(resource.getId());
 
-    if(configAttributes == null){
+    if (configAttributes == null) {
       return new ArrayList<>();
     }
     return new ArrayList<>(configAttributes);

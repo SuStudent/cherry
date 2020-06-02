@@ -15,7 +15,8 @@ import org.sustudent.cherry.services.user.mapper.SysResourcePermissionMapper;
  * @createTime 2019/11/22/ 15:18:00
  */
 @Service
-public class SysResourcePermissionService extends BaseService<SysResourcePermissionMapper, SysResourcePermission> {
+public class SysResourcePermissionService extends
+    BaseService<SysResourcePermissionMapper, SysResourcePermission> {
 
   public List<SysResourcePermission> findConfigAttributes(ResourceType resourceType) {
     return mapper.findConfigAttributes(resourceType);

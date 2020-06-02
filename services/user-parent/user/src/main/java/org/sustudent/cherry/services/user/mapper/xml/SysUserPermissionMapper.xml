@@ -6,15 +6,15 @@
   <select
     id="findUserPermission"
     resultType="org.sustudent.cherry.services.user.entity.SysUserPermission">
-        SELECT
-          per.*,
-          role.attribute as roleAttribute
-        FROM
-          sys_user_permission per
-          INNER JOIN sys_role role ON per.role_id = role.id
-          AND role.deleted = 0
-        WHERE
-          per.deleted = 0
-          and per.user_id = #{userId}
+    SELECT
+    per.*,
+    role.attribute as roleAttribute
+    FROM
+    sys_user_permission per
+    INNER JOIN sys_role role ON per.role_id = role.id
+    AND role.deleted = 0
+    WHERE
+    per.deleted = 0
+    and per.user_id = #{userId}
   </select>
 </mapper>

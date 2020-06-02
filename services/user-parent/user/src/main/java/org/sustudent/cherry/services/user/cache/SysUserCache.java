@@ -31,7 +31,7 @@ public class SysUserCache {
 
 
   @Cacheable(value = "sysUser", key = "methodName + '::' + #username")
-  public CherryUser findUserByUsername(String username){
+  public CherryUser findUserByUsername(String username) {
     Example example = new Example(SysUser.class);
     example.createCriteria()
         .andEqualTo("username", username)

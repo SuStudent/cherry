@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,6 +37,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Autowired(required = false)
   private CherryAccessDecisionManager cherryAccessDecisionManager;
+
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
 
   @Override
@@ -71,9 +75,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     String[] ignoresUrls = securityIgnoreProperties.getUrls()
         .toArray(new String[securityIgnoreProperties.getUrls().size()]);
+
     http
-        .httpBasic()
-        .disable()
+//        .httpBasic()
+//        .disable()
         .csrf()
         .disable()
         .authorizeRequests()
@@ -81,21 +86,24 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .permitAll()
         .anyRequest()
         .authenticated()
-        .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-          @Override
-          public <O extends FilterSecurityInterceptor> O postProcess(O object) {
-            // 使用自定义的元数据
-            if (urlSecurityMetadataSource != null) {
-              object.setSecurityMetadataSource(urlSecurityMetadataSource);
-            }
-            // 使用自定义的决策器
-            if (cherryAccessDecisionManager != null) {
-              object.setAccessDecisionManager(cherryAccessDecisionManager);
-            }
-            return object;
-          }
-        })
         .and()
         .exceptionHandling().accessDeniedHandler(new CherryAccessDeniedHandler());
+
+    if (urlSecurityMetadataSource != null && cherryAccessDecisionManager != null) {
+      CherryFilterSecurityInterceptor securityInterceptor = createFilterSecurityInterceptor(
+          authenticationManager);
+      http.addFilterAfter(securityInterceptor, FilterSecurityInterceptor.class);
+      http.setSharedObject(CherryFilterSecurityInterceptor.class, securityInterceptor);
+    }
+  }
+
+  private CherryFilterSecurityInterceptor createFilterSecurityInterceptor(
+      AuthenticationManager authenticationManager) throws Exception {
+    CherryFilterSecurityInterceptor securityInterceptor = new CherryFilterSecurityInterceptor();
+    securityInterceptor.setSecurityMetadataSource(urlSecurityMetadataSource);
+    securityInterceptor.setAccessDecisionManager(cherryAccessDecisionManager);
+    securityInterceptor.setAuthenticationManager(authenticationManager);
+    securityInterceptor.afterPropertiesSet();
+    return securityInterceptor;
   }
 }

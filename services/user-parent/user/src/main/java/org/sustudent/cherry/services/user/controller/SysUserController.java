@@ -48,19 +48,19 @@ public class SysUserController extends BaseController {
   }
 
   @PostMapping("/save")
-  public ResponseResult save(@RequestBody SysUser user){
+  public ResponseResult save(@RequestBody SysUser user) {
     return success(sysUserService.saveUser(user));
   }
 
   @GetMapping("/findPage")
-  public ResponseResult findPage(SysUser user, HttpServletRequest request){
-    Page<SysUser> page = getPage(request,SysUser.class);
-    sysUserService.findPage(page,user);
+  public ResponseResult findPage(SysUser user, HttpServletRequest request) {
+    Page<SysUser> page = getPage(request, SysUser.class);
+    sysUserService.findPage(page, user);
     return success(page);
   }
 
   @PostMapping("/delete")
-  public ResponseResult delete(@RequestBody SysUser user){
+  public ResponseResult delete(@RequestBody SysUser user) {
     sysUserService.delete(user);
     return success();
   }

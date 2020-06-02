@@ -50,7 +50,7 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>provided</scope>
     </dependency>
-    
+
     <!-- security -->
     <dependency>
       <groupId>org.sustudent</groupId>

@@ -36,7 +36,7 @@ import org.sustudent.cherry.center.gateway.exception.CherryErrorWebExceptionHand
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 @ConditionalOnClass(WebFluxConfigurer.class)
 @AutoConfigureBefore(WebFluxAutoConfiguration.class)
-@EnableConfigurationProperties({ ServerProperties.class, ResourceProperties.class })
+@EnableConfigurationProperties({ServerProperties.class, ResourceProperties.class})
 public class CherryErrorWebFluxAutoConfiguration {
 
   private final ServerProperties serverProperties;

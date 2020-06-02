@@ -6,30 +6,30 @@
   <select
     id="findPage"
     resultType="org.sustudent.cherry.services.user.entity.SysUser">
-        SELECT
-          id,
-          username,
-          password,
-          real_name,
-          mobile,
-          email,
-          photo,
-          enabled,
-          account_non_expired,
-          account_non_locked,
-          create_by,
-          create_time,
-          update_by,
-          update_time,
-          deleted
-        from
-            sys_user
-        where
-            deleted = 0
-            <if test="user.name != null and user.name != ''">
-              AND (username like concat('%',#{user.name},'%')
-                OR real_name like concat('%',#{user.name},'%')
-                  )
-            </if>
+    SELECT
+    id,
+    username,
+    password,
+    real_name,
+    mobile,
+    email,
+    photo,
+    enabled,
+    account_non_expired,
+    account_non_locked,
+    create_by,
+    create_time,
+    update_by,
+    update_time,
+    deleted
+    from
+    sys_user
+    where
+    deleted = 0
+    <if test="user.name != null and user.name != ''">
+      AND (username like concat('%',#{user.name},'%')
+      OR real_name like concat('%',#{user.name},'%')
+      )
+    </if>
   </select>
 </mapper>

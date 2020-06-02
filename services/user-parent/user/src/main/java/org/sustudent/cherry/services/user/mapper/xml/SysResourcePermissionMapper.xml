@@ -5,21 +5,21 @@
   <select
     id="findConfigAttributes"
     resultType="org.sustudent.cherry.services.user.entity.SysResourcePermission">
-      SELECT
-        p.resource_id AS resourceId,
-        p.role_id AS roleId,
-        r.attribute AS roleAttribute,
-        sr.path AS resourcePath
-      FROM
-        sys_resource_permission p
-        INNER JOIN sys_resource AS sr ON sr.id = p.resource_id
-        AND sr.deleted = 0
-        INNER JOIN sys_role r ON p.role_id = r.id
-        AND r.deleted = 0
-      WHERE
-        p.deleted = 0
-        <if test="resourceType != null">
-          AND sr.type = #{resourceType.name}
-        </if>
-</select>
+    SELECT
+    p.resource_id AS resourceId,
+    p.role_id AS roleId,
+    r.attribute AS roleAttribute,
+    sr.path AS resourcePath
+    FROM
+    sys_resource_permission p
+    INNER JOIN sys_resource AS sr ON sr.id = p.resource_id
+    AND sr.deleted = 0
+    INNER JOIN sys_role r ON p.role_id = r.id
+    AND r.deleted = 0
+    WHERE
+    p.deleted = 0
+    <if test="resourceType != null">
+      AND sr.type = #{resourceType.name}
+    </if>
+  </select>
 </mapper>

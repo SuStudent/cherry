@@ -21,8 +21,6 @@ public class FeignOkHttpConfig {
   @Bean
   public OkHttpClient okHttpClient() {
 
-
-
     return new OkHttpClient.Builder()
         // 连接超时
         .connectTimeout(60, TimeUnit.SECONDS)

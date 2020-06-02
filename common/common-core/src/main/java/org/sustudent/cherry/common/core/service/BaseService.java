@@ -11,8 +11,6 @@ import tk.mybatis.mapper.entity.Example;
 
 /**
  * 基础业务处理类，CRUD封装
- * @param <M>
- * @param <T>
  */
 public class BaseService<M extends BaseMapper<T>, T extends BaseEntity> {
 
@@ -52,10 +50,10 @@ public class BaseService<M extends BaseMapper<T>, T extends BaseEntity> {
    */
   @Transactional
   public int insert(T t) {
-      t.setDeleted(false);
-      t.setCreateBy(ContextUtils.getLoginUserId());
-      t.setCreateTime(new Date());
-      return mapper.insertSelective(t);
+    t.setDeleted(false);
+    t.setCreateBy(ContextUtils.getLoginUserId());
+    t.setCreateTime(new Date());
+    return mapper.insertSelective(t);
   }
 
   /**
@@ -63,10 +61,10 @@ public class BaseService<M extends BaseMapper<T>, T extends BaseEntity> {
    */
   @Transactional
   public int update(T t) {
-      t.setDeleted(false);
-      t.setUpdateBy(ContextUtils.getLoginUserId());
-      t.setUpdateTime(new Date());
-      return mapper.updateByPrimaryKeySelective(t);
+    t.setDeleted(false);
+    t.setUpdateBy(ContextUtils.getLoginUserId());
+    t.setUpdateTime(new Date());
+    return mapper.updateByPrimaryKeySelective(t);
   }
 
   /**
@@ -74,10 +72,10 @@ public class BaseService<M extends BaseMapper<T>, T extends BaseEntity> {
    */
   @Transactional
   public int delete(T t) {
-      t.setDeleted(true);
-      t.setUpdateBy(ContextUtils.getLoginUserId());
-      t.setUpdateTime(new Date());
-      return mapper.updateByPrimaryKeySelective(t);
+    t.setDeleted(true);
+    t.setUpdateBy(ContextUtils.getLoginUserId());
+    t.setUpdateTime(new Date());
+    return mapper.updateByPrimaryKeySelective(t);
   }
 
   /**
@@ -86,7 +84,7 @@ public class BaseService<M extends BaseMapper<T>, T extends BaseEntity> {
   @Transactional
   public int delete(Long id) {
     T t = this.getById(id);
-    if(t == null){
+    if (t == null) {
       return 0;
     }
     return delete(t);

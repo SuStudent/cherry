@@ -6,7 +6,7 @@ import org.sustudent.cherry.common.core.model.ResponseResult;
 
 /**
  * 异常拦截器
- * 
+ *
  * @author yiyi.su
  * @date 2019年4月29日
  */
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(CommonException.class)
-  public ResponseResult<?> bussinessException(CommonException ex) {
+  public ResponseResult<?> commonException(CommonException ex) {
     ex.printStackTrace();
     return ResponseResult.error(ex.getMessage());
   }

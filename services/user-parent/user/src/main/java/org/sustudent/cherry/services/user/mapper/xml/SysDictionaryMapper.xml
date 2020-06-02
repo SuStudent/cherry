@@ -4,24 +4,24 @@
   <select
     id="findPage"
     resultType="org.sustudent.cherry.services.user.entity.SysDictionary">
-      SELECT
-        id,
-        CODE,
-        NAME,
-        create_by,
-        create_time,
-        update_by,
-        update_time,
-        deleted
-      FROM
-        sys_dictionary
-      WHERE
-        deleted = 0
-        <if test="dict.code != null and dict.code != ''">
-          AND code = #{dict.code}
-        </if>
-        <if test="dict.name != null and dict.name != ''">
-          and name like concat('%',#{dict.name},'%')
-        </if>
+    SELECT
+    id,
+    CODE,
+    NAME,
+    create_by,
+    create_time,
+    update_by,
+    update_time,
+    deleted
+    FROM
+    sys_dictionary
+    WHERE
+    deleted = 0
+    <if test="dict.code != null and dict.code != ''">
+      AND code = #{dict.code}
+    </if>
+    <if test="dict.name != null and dict.name != ''">
+      and name like concat('%',#{dict.name},'%')
+    </if>
   </select>
 </mapper>

@@ -30,24 +30,24 @@ public class SysRoleController extends BaseController {
   private SysRoleService sysRoleService;
 
   @GetMapping("/findPage")
-  public ResponseResult findPage(HttpServletRequest request,SysRole sysRole) {
+  public ResponseResult findPage(HttpServletRequest request, SysRole sysRole) {
     Page<SysRole> page = getPage(request, SysRole.class);
-    sysRoleService.findPage(page,sysRole);
+    sysRoleService.findPage(page, sysRole);
     return ResponseResult.success(page);
   }
 
   @GetMapping("/checkField")
-  public ResponseResult checkField(SysRole role){
+  public ResponseResult checkField(SysRole role) {
     return success(sysRoleService.checkField(role));
   }
 
   @PostMapping("/save")
-  public ResponseResult save(@RequestBody SysRole role){
+  public ResponseResult save(@RequestBody SysRole role) {
     return success(sysRoleService.save(role));
   }
 
   @PostMapping("/delete")
-  public ResponseResult delete(@RequestBody SysRole role){
+  public ResponseResult delete(@RequestBody SysRole role) {
     sysRoleService.delete(role);
     return success();
   }

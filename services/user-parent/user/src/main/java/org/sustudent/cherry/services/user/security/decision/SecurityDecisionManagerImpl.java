@@ -44,7 +44,7 @@ public class SecurityDecisionManagerImpl implements SecurityDecisionManager {
       return true;
     }
 
-    if(resource.getId() == null || resource.getId() == 0L) {
+    if (resource.getId() == null || resource.getId() == 0L) {
       return true;
     }
     return decide(null, resource);
@@ -55,7 +55,7 @@ public class SecurityDecisionManagerImpl implements SecurityDecisionManager {
     if (resource == null) {
       return true;
     }
-    if(resource.getId() == null || resource.getId() == 0L) {
+    if (resource.getId() == null || resource.getId() == 0L) {
       return true;
     }
     Collection<ConfigAttribute> attributes = this.findConfigAttributes(resource);

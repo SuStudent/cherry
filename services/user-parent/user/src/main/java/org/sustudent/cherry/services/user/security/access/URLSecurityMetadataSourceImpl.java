@@ -43,7 +43,12 @@ public class URLSecurityMetadataSourceImpl implements URLSecurityMetadataSource 
         org.springframework.security.access.SecurityConfig.createList("test01"));
     ConfigAttributeMap.put("/sysUser/test02",
         org.springframework.security.access.SecurityConfig.createList("test02"));
-    return new ArrayList(ConfigAttributeMap.values());
+
+    Collection<ConfigAttribute> result = new ArrayList<>();
+    for (Collection<ConfigAttribute> value : ConfigAttributeMap.values()) {
+      result.addAll(value);
+    }
+    return result;
   }
 
   @Override

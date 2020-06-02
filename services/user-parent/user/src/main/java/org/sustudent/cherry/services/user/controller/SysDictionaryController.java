@@ -33,37 +33,37 @@ public class SysDictionaryController extends BaseController {
   private SysDictionaryItemService sysDictItemService;
 
   @GetMapping("/findPage")
-  public ResponseResult findPage(SysDictionary sysDictionary, HttpServletRequest request){
-    Page<SysDictionary> page = getPage(request,SysDictionary.class);
-    sysDictService.findPage(page,sysDictionary);
+  public ResponseResult findPage(SysDictionary sysDictionary, HttpServletRequest request) {
+    Page<SysDictionary> page = getPage(request, SysDictionary.class);
+    sysDictService.findPage(page, sysDictionary);
     return success(page);
   }
 
   @PostMapping("/save")
-  public ResponseResult save(@RequestBody SysDictionary sysDictionary){
+  public ResponseResult save(@RequestBody SysDictionary sysDictionary) {
     sysDictService.saveOrUpdate(sysDictionary);
     return success(sysDictionary);
   }
 
   @PostMapping("/delete")
-  public ResponseResult delete(@RequestBody SysDictionary sysDictionary){
+  public ResponseResult delete(@RequestBody SysDictionary sysDictionary) {
     sysDictService.delete(sysDictionary);
     return success();
   }
 
   @GetMapping("/findDictItems")
-  public ResponseResult findDictItems(SysDictionaryItem sysDictionaryItem){
+  public ResponseResult findDictItems(SysDictionaryItem sysDictionaryItem) {
     return success(sysDictItemService.findDictItems(sysDictionaryItem));
   }
 
   @PostMapping("/saveItem")
-  public ResponseResult saveItem(@RequestBody SysDictionaryItem sysDictionaryItem){
+  public ResponseResult saveItem(@RequestBody SysDictionaryItem sysDictionaryItem) {
     sysDictItemService.saveOrUpdate(sysDictionaryItem);
     return success(sysDictionaryItem);
   }
 
   @PostMapping("/deleteItem")
-  public ResponseResult deleteItem(@RequestBody SysDictionaryItem sysDictionaryItem){
+  public ResponseResult deleteItem(@RequestBody SysDictionaryItem sysDictionaryItem) {
     sysDictItemService.delete(sysDictionaryItem);
     return success();
   }

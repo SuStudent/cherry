@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http
+    http.httpBasic().and()
         // 前后端分离，关闭csrf
         .csrf().disable()
         .authorizeRequests()

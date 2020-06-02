@@ -26,8 +26,8 @@ public class CherryAccessDeniedHandler implements AccessDeniedHandler {
       AccessDeniedException accessDeniedException) throws IOException, ServletException {
     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     response.setContentType("application/json;charset=UTF-8");
-    Map<String,Object> body = new HashMap<>();
-    body.put("success",false);
+    Map<String, Object> body = new HashMap<>();
+    body.put("success", false);
     body.put("msg", "没有权限访问。");
     body.put("status", HttpStatus.FORBIDDEN.value());
     PrintWriter pw = response.getWriter();

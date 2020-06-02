@@ -14,3 +14,5 @@ spring:
         format: YAML
         watch:
           enabled: true
+  main:
+    allow-bean-definition-overriding: true

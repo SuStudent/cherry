@@ -1,5 +1,6 @@
 package org.sustudent.cherry.services.user.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.sustudent.cherry.common.core.model.Page;
 import org.sustudent.cherry.common.core.service.BaseService;
@@ -14,9 +15,10 @@ import org.sustudent.cherry.services.user.mapper.SysDictionaryMapper;
  * @createTime 2019/12/21/ 19:50:00
  */
 @Transactional
+@Service
 public class SysDictionarySerivce extends BaseService<SysDictionaryMapper, SysDictionary> {
 
   public void findPage(Page<SysDictionary> page, SysDictionary sysDictionary) {
-    mapper.findPage(page,sysDictionary);
+    mapper.findPage(page, sysDictionary);
   }
 }

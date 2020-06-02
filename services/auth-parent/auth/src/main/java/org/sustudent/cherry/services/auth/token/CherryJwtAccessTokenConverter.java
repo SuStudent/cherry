@@ -39,37 +39,27 @@ public class CherryJwtAccessTokenConverter extends JwtAccessTokenConverter {
   public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
 //    OAuth2AccessToken oauth2AccessToken = super.extractAccessToken(value, map);
 //    convertData(oauth2AccessToken, oauth2AccessToken.getAdditionalInformation());
-    return super.extractAccessToken(value,map);
+    return super.extractAccessToken(value, map);
   }
-
-  private void convertData(OAuth2AccessToken accessToken, Map<String, ?> map) {
-    accessToken.getAdditionalInformation()
-        .put(jwt_user_key, convertUserData(map.get(jwt_user_key)));
-
-  }
-
-  private CherryUser convertUserData(Object map) {
-    ObjectMapper om = new ObjectMapper();
-    String json = null;
-    CherryUser user = null;
-    try {
-      json = om.writeValueAsString(map);
-      user = om.readValue(json, CherryUser.class);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return user;
-  }
-
-  public static void main(String[] args) {
-    Map<String,Object> a = Maps.newHashMap();
-
-    a.put("a","a");
-    a.put("b","b");
-    a.put("c","c");
-
-    a.values();
-  }
+//
+//  private void convertData(OAuth2AccessToken accessToken, Map<String, ?> map) {
+//    accessToken.getAdditionalInformation()
+//        .put(jwt_user_key, convertUserData(map.get(jwt_user_key)));
+//
+//  }
+//
+//  private CherryUser convertUserData(Object map) {
+//    ObjectMapper om = new ObjectMapper();
+//    String json = null;
+//    CherryUser user = null;
+//    try {
+//      json = om.writeValueAsString(map);
+//      user = om.readValue(json, CherryUser.class);
+//    } catch (JsonProcessingException e) {
+//      e.printStackTrace();
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+//    return user;
+//  }
 }

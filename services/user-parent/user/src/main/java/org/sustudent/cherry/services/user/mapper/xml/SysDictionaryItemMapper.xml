@@ -5,23 +5,23 @@
     id="findDictItems"
     resultType="org.sustudent.cherry.services.user.entity.SysDictionaryItem">
     SELECT
-      id,
-      label,
-      `value`,
-      enabled,
-      sort,
-      dictionary_id,
-      create_by,
-      create_time,
-      update_by,
-      update_time,
-      deleted
+    id,
+    label,
+    `value`,
+    enabled,
+    sort,
+    dictionary_id,
+    create_by,
+    create_time,
+    update_by,
+    update_time,
+    deleted
     FROM
-      sys_dictionary_item
+    sys_dictionary_item
     WHERE
-      deleted = 0
-      <if test="dictionaryId != null">
-        and dictionary_id=#{dictionaryId}
-      </if>
+    deleted = 0
+    <if test="dictionaryId != null">
+      and dictionary_id=#{dictionaryId}
+    </if>
   </select>
 </mapper>

@@ -17,7 +17,8 @@ import org.springframework.context.annotation.Configuration;
 public class MybatisConfig {
 
   @Autowired
-  private void addPageInterceptor(PageHelperAutoConfiguration pageHelperAutoConfiguration,List<SqlSessionFactory> sqlSessionFactoryList) {
+  private void addPageInterceptor(PageHelperAutoConfiguration pageHelperAutoConfiguration,
+      List<SqlSessionFactory> sqlSessionFactoryList) {
     sqlSessionFactoryList.forEach(sqlSessionFactory -> {
       sqlSessionFactory.getConfiguration().addInterceptor(new PageIntercept());
     });
