@@ -62,7 +62,7 @@ public class CherryErrorWebFluxAutoConfiguration {
     this.serverCodecConfigurer = serverCodecConfigurer;
   }
 
-  @Bean
+
   @ConditionalOnMissingBean(value = ErrorWebExceptionHandler.class, search = SearchStrategy.CURRENT)
   @Order(-1)
   public ErrorWebExceptionHandler errorWebExceptionHandler(
@@ -76,7 +76,7 @@ public class CherryErrorWebFluxAutoConfiguration {
     return exceptionHandler;
   }
 
-  @Bean
+
   @ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
   public DefaultErrorAttributes errorAttributes() {
     return new DefaultErrorAttributes(

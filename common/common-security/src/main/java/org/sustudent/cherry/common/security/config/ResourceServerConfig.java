@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -77,8 +76,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .toArray(new String[securityIgnoreProperties.getUrls().size()]);
 
     http
-//        .httpBasic()
-//        .disable()
         .csrf()
         .disable()
         .authorizeRequests()

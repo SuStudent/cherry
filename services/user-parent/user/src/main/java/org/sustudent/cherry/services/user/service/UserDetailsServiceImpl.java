@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.sustudent.cherry.common.security.config.CherryUserDetailsService;
 
 /**
  * @author yiyi.su
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @createTime 2019/11/11/ 16:16:00
  */
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl extends CherryUserDetailsService {
 
   @Autowired
   private SysUserService sysUserService;
@@ -22,6 +23,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return sysUserService.findUserByUsername(username);
-
   }
 }

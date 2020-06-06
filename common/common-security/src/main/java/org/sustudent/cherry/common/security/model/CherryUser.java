@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 import org.apache.commons.lang.BooleanUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.sustudent.cherry.common.security.enums.AuthTypeEnum;
 
 
 public class CherryUser implements UserDetails {
@@ -57,6 +58,11 @@ public class CherryUser implements UserDetails {
    * 图片
    */
   private String photo;
+
+  /**
+   * 认证类型
+   */
+  private AuthTypeEnum authType;
 
   /**
    * 拥有的权限
@@ -166,4 +172,11 @@ public class CherryUser implements UserDetails {
     this.photo = photo;
   }
 
+  public AuthTypeEnum getAuthType() {
+    return authType;
+  }
+
+  public void setAuthType(AuthTypeEnum authType) {
+    this.authType = authType;
+  }
 }

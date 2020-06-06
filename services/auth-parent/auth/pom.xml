@@ -11,7 +11,6 @@
 
   <artifactId>auth</artifactId>
 
-
   <dependencies>
     <dependency>
       <groupId>org.sustudent</groupId>
@@ -22,6 +21,11 @@
       <groupId>org.sustudent</groupId>
       <artifactId>user-api</artifactId>
       <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.binarywang</groupId>
+      <artifactId>weixin-java-miniapp</artifactId>
+      <version>3.8.0</version>
     </dependency>
   </dependencies>
 

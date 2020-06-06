@@ -1,5 +1,8 @@
 package org.sustudent.cherry.services.auth.conf;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
@@ -16,11 +19,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.sustudent.cherry.common.security.exception.CherryOauthException;
+import org.sustudent.cherry.common.security.wx.WxAppTokenGranter;
 import org.sustudent.cherry.services.auth.token.CherryJwtAccessTokenConverter;
 
 
@@ -66,6 +72,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     endpoints
         .tokenStore(redisTokenStore())
         .accessTokenConverter(jwtTokenEnhancer())
+        .tokenGranter(tokenGranter(endpoints))
         .authenticationManager(authenticationManager)
         .userDetailsService(userDetailService)
         .exceptionTranslator(e -> {
@@ -100,5 +107,11 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
         // 验证获取Token的验证信息
         .checkTokenAccess("isAuthenticated()")
         .allowFormAuthenticationForClients();
+  }
+
+  private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
+    List<TokenGranter> granters = new ArrayList(Arrays.asList(endpoints.getTokenGranter()));// 获取默认的granter集合
+    granters.add(new WxAppTokenGranter(authenticationManager,endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
+    return new CompositeTokenGranter(granters);
   }
 }

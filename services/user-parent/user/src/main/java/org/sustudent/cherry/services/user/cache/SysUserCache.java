@@ -6,11 +6,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.sustudent.cherry.common.security.enums.AuthTypeEnum;
 import org.sustudent.cherry.common.security.model.CherryGrantedAuthority;
 import org.sustudent.cherry.common.security.model.CherryUser;
+import org.sustudent.cherry.common.security.wx.WxUser;
 import org.sustudent.cherry.services.user.entity.SysUser;
 import org.sustudent.cherry.services.user.mapper.SysUserMapper;
 import org.sustudent.cherry.services.user.mapper.SysUserPermissionMapper;
+import org.sustudent.cherry.services.user.service.SysUserService;
 import tk.mybatis.mapper.entity.Example;
 
 /**
@@ -41,27 +44,24 @@ public class SysUserCache {
     if (sysUser == null) {
       return null;
     }
+    CherryUser cherryUser = this.buildUser(sysUser);
+    cherryUser.setAuthType(AuthTypeEnum.PASSWORD);
+    return cherryUser;
+  }
 
-    CherryUser user = this.buildUser(sysUser);
-
+  private Set<CherryGrantedAuthority> getUserAuthorities(CherryUser user) {
     Set<CherryGrantedAuthority> authorities = userPermissionMapper
-        .findUserPermission(sysUser.getId())
+        .findUserPermission(user.getId())
         .stream().map(v -> {
           CherryGrantedAuthority authority = new CherryGrantedAuthority();
           authority.setAuthority(v.getRoleAttribute());
           return authority;
         }).collect(Collectors.toSet());
 
-//    Set<CherryGrantedAuthority> authorities = new HashSet<>();
-//    CherryGrantedAuthority authority = new CherryGrantedAuthority();
-//    authority.setAuthority("test01");
-//    authorities.add(authority);
-
-    user.setAuthorities(authorities);
-    return user;
+    return authorities;
   }
 
-  private CherryUser buildUser(SysUser sysUser) {
+  public CherryUser buildUser(SysUser sysUser) {
     CherryUser user = new CherryUser();
     user.setId(sysUser.getId());
     user.setEmail(sysUser.getEmail());
@@ -73,6 +73,7 @@ public class SysUserCache {
     user.setEnabled(sysUser.getEnabled());
     user.setAccountNonExpired(sysUser.getAccountNonExpired());
     user.setAccountNonLocked(sysUser.getAccountNonLocked());
+    user.setAuthorities(getUserAuthorities(user));
     return user;
   }
 }

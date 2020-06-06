@@ -13,6 +13,8 @@ import org.sustudent.cherry.common.core.model.Page;
 import org.sustudent.cherry.common.core.web.BaseController;
 import org.sustudent.cherry.common.security.model.CherryUser;
 import org.sustudent.cherry.common.core.model.ResponseResult;
+import org.sustudent.cherry.common.security.utils.ContextUtils;
+import org.sustudent.cherry.common.security.wx.WxUser;
 import org.sustudent.cherry.services.user.entity.SysUser;
 import org.sustudent.cherry.services.user.service.SysUserService;
 
@@ -34,6 +36,12 @@ public class SysUserController extends BaseController {
   @GetMapping("/findUserByUsername")
   public ResponseResult<CherryUser> findUserByUsername(@RequestParam String username) {
     return ResponseResult.success(sysUserService.findUserByUsername(username));
+  }
+
+  @PostMapping("/findWxUserAndSave")
+  public ResponseResult<CherryUser> findWxUserAndSave(@RequestBody WxUser wxUser){
+    ContextUtils.mockLoginUser(1L);
+    return ResponseResult.success(sysUserService.findWxUserAndSave(wxUser));
   }
 
   @GetMapping("/test01")

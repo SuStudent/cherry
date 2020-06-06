@@ -2,6 +2,7 @@ package org.sustudent.cherry.common.security.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,12 @@ public class ContextUtils implements ApplicationContextAware {
 
   public static void mockLoginUser(CherryUser cherryUser) {
     LOCAL_USER.set(cherryUser);
+  }
+
+  public static void mockLoginUser(Long loginId) {
+    CherryUser cherryUser = new CherryUser();
+    cherryUser.setId(loginId);
+    mockLoginUser(cherryUser);
   }
 
   public static void removeMockLoginUser(CherryUser cherryUser) {
@@ -58,5 +65,17 @@ public class ContextUtils implements ApplicationContextAware {
       return user.getId();
     }
     return null;
+  }
+
+  /**
+   * 发布事件
+   *
+   * @param event
+   */
+  public static void publishEvent(ApplicationEvent event) {
+    if (applicationContext == null) {
+      return;
+    }
+    applicationContext.publishEvent(event);
   }
 }
