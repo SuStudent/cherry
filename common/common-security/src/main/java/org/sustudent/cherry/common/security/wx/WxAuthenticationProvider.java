@@ -1,16 +1,12 @@
 package org.sustudent.cherry.common.security.wx;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 import org.sustudent.cherry.common.security.config.CherryUserDetailsService;
-import org.sustudent.cherry.common.security.utils.ContextUtils;
 
 /**
  * @author yiyi.su
@@ -20,11 +16,14 @@ import org.sustudent.cherry.common.security.utils.ContextUtils;
  * @createTime 2020/06/06/ 15:00:00
  */
 @Slf4j
-@Service
 public class WxAuthenticationProvider implements AuthenticationProvider {
 
-  @Autowired
+  // @Autowired
   private CherryUserDetailsService cherryUserDetailsService;
+
+  public WxAuthenticationProvider(CherryUserDetailsService cherryUserDetailsService) {
+    this.cherryUserDetailsService = cherryUserDetailsService;
+  }
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

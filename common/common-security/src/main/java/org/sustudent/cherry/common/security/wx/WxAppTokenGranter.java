@@ -2,7 +2,6 @@ package org.sustudent.cherry.common.security.wx;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,9 +37,10 @@ public class WxAppTokenGranter extends AbstractTokenGranter {
 
   private final AuthenticationManager authenticationManager;
 
-  private ObjectMapper om = new ObjectMapper();
+  private final ObjectMapper objectMapper = new ObjectMapper();
+
   {
-    om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
   public WxAppTokenGranter(
@@ -63,10 +63,9 @@ public class WxAppTokenGranter extends AbstractTokenGranter {
   protected OAuth2Authentication getOAuth2Authentication(ClientDetails client,
       TokenRequest tokenRequest) {
 
-    Map<String, String> parameters = new LinkedHashMap<String, String>(
-        tokenRequest.getRequestParameters());
+    Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
     String code = parameters.get("code");
-    if(StringUtils.isBlank(code)) {
+    if (StringUtils.isBlank(code)) {
       throw new BadCredentialsException("微信小程序code参数缺失。");
     }
 
@@ -75,27 +74,24 @@ public class WxAppTokenGranter extends AbstractTokenGranter {
     ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
     try {
       userAuth = authenticationManager.authenticate(userAuth);
-    } catch (AccountStatusException ase) {
-      //covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
+    } catch (AccountStatusException | BadCredentialsException ase) {
       throw new InvalidGrantException(ase.getMessage());
-    } catch (BadCredentialsException e) {
-      // If the username/password are wrong the spec says we should send 400/invalid grant
-      throw new InvalidGrantException(e.getMessage());
     }
     if (userAuth == null || !userAuth.isAuthenticated()) {
       throw new InvalidGrantException("微信小程序认证失败: " + code);
     }
-
     OAuth2Request storedOAuth2Request = getRequestFactory()
         .createOAuth2Request(client, tokenRequest);
     return new OAuth2Authentication(storedOAuth2Request, userAuth);
   }
 
   private WxClientUserInfo getWxClientUserInfo() {
-    ServletRequestAttributes sra= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    HttpServletRequest request =  sra.getRequest();
+    ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
+        .getRequestAttributes();
+    assert sra != null;
+    HttpServletRequest request = sra.getRequest();
     try (InputStream is = request.getInputStream()) {
-      return om.readValue(is, WxClientUserInfo.class);
+      return objectMapper.readValue(is, WxClientUserInfo.class);
     } catch (Exception e) {
       throw new InvalidGrantException("request 解析用户数据失败 " + e.getMessage());
     }
