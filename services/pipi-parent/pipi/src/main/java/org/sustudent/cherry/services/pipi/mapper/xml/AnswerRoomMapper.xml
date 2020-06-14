@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.sustudent.cherry.services.pipi.mapper.AnswerRoomMapper">
+  <select
+    id="findRoomPage"
+    resultType="org.sustudent.cherry.services.pipi.entity.AnswerRoom">
+    SELECT
+      room.*
+      <if test="answerRoomVO.latitude != null and answerRoomVO.latitude != '' and answerRoomVO.longitude != null and answerRoomVO.longitude != ''">
+        ,round( st_distance_sphere ( point ( #{answerRoomVO.longitude}, #{answerRoomVO.latitude} ), point ( room.longitude, room.latitude ))/ 1000, 2 ) AS distance
+      </if>
+    FROM
+      answer_room room
+    ORDER BY
+    <if test="answerRoomVO.latitude != null and answerRoomVO.latitude != '' and answerRoomVO.longitude != null and answerRoomVO.longitude != ''">
+      st_distance_sphere (
+      point ( 121.54409, 31.22114 ),
+      point ( room.longitude, room.latitude ))/ 1000 ASC,
+    </if>
+        room.create_time DESC
+  </select>
+</mapper>

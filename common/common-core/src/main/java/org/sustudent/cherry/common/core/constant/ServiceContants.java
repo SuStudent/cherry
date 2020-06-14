@@ -19,4 +19,9 @@ public class ServiceContants {
    * 授权服务名称
    */
   public static final String AUTH_SERVICE = "auth";
+
+  /**
+   * 皮皮猿 服务
+   */
+  public static final String PIPI_SERVICE = "pipi";
 }
