@@ -1,4 +1,4 @@
-package org.sustudent.cherry.services.pipi.socket;
+package org.sustudent.cherry.services.pipi.socket.storage;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class GameSocketSession implements Serializable {
+public class SocketSession implements Serializable {
 
   private Session session;
 
@@ -31,7 +31,7 @@ public class GameSocketSession implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GameSocketSession that = (GameSocketSession) o;
+    SocketSession that = (SocketSession) o;
     return Objects.equals(session != null ? session.getId() : null,
         that.session != null ? that.session.getId() : null) &&
         Objects.equals(roomNo, that.roomNo) &&

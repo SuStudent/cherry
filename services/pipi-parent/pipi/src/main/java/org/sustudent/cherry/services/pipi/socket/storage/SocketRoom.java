@@ -1,10 +1,8 @@
-package org.sustudent.cherry.services.pipi.socket;
+package org.sustudent.cherry.services.pipi.socket.storage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import lombok.Data;
 
 /**
@@ -15,13 +13,13 @@ import lombok.Data;
  * @createTime 2020/06/18/ 13:11:00
  */
 @Data
-public class GameSocketRoom implements Serializable {
+public class SocketRoom implements Serializable {
 
   private String roomNo;
 
-  private List<GameSocketSession> sessions;
+  private List<SocketSession> sessions;
 
-  public List<GameSocketSession> getSessions() {
+  public List<SocketSession> getSessions() {
     if(sessions == null) {
       sessions = new ArrayList<>();
     }

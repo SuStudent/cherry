@@ -1,9 +1,6 @@
 package org.sustudent.cherry.services.pipi.socket.messages;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Set;
-import org.reflections.Reflections;
+import lombok.Data;
 import org.sustudent.cherry.services.pipi.enums.MessageTypeEnum;
 
 /**
@@ -13,26 +10,12 @@ import org.sustudent.cherry.services.pipi.enums.MessageTypeEnum;
  * @Description TestSocketMessage
  * @createTime 2020/06/18/ 22:27:00
  */
+@Data
 public class TestSocketMessage extends SocketMessage {
 
-  private String name;
+  private String username;
 
-  private String asd;
-
-
-  public static void main(String[] args) {
-    Reflections reflections = new Reflections("org.sustudent.cherry.services.pipi.socket");
-    Set<Class<? extends SocketMessage>> subTypes = reflections.getSubTypesOf(SocketMessage.class);
-    subTypes.forEach(x -> {
-      try {
-        SocketMessage socketMessage = x.newInstance();
-        System.out.println(socketMessage.getType());
-        System.out.println(socketMessage.getClass());
-      } catch ( IllegalAccessException | InstantiationException e) {
-        e.printStackTrace();
-      }
-    });
-  }
+  private String sex;
 
   @Override
   public MessageTypeEnum getType() {
