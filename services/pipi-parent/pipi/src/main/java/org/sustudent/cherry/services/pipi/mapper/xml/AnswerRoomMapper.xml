@@ -13,9 +13,7 @@
       answer_room room
     ORDER BY
     <if test="answerRoomVO.latitude != null and answerRoomVO.latitude != '' and answerRoomVO.longitude != null and answerRoomVO.longitude != ''">
-      st_distance_sphere (
-      point ( 121.54409, 31.22114 ),
-      point ( room.longitude, room.latitude ))/ 1000 ASC,
+      round( st_distance_sphere ( point ( '121.5052261352539', '31.10272216796875' ), point ( room.longitude, room.latitude ))/ 1000, 2 ) asc,
     </if>
         room.create_time DESC
   </select>
