@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import javax.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.Assert;
 
 /**
  * @author yiyi.su
@@ -27,6 +29,12 @@ public final class SocketStorageManage {
    * key: sessionId
    */
   private static final Map<String, SocketSession> socketSessionMap = new ConcurrentHashMap<>();
+
+  /**
+   * key: roomNo
+   * value: 本房间的正确答案
+   */
+  private static final Map<String, String> roomAnswerMap = new ConcurrentHashMap<>();
 
 
   public static SocketSession convertSession(Session session) {
@@ -77,4 +85,50 @@ public final class SocketStorageManage {
     }
     log.info("删除成功，sessionSize: {}, roomSessionSize: {}",socketSessionMap.size(),roomMap.size());
   }
+
+
+  /**
+   * @Description 通过 session 获取与其同房间的所有 session
+   * @param session
+   * @return java.util.List<javax.websocket.Session>
+   */
+  public static List<Session> getThisRoomAllSessions(Session session) {
+
+    SocketRoom socketRoom = roomMap.get(getThisRoomNoBySession(session));
+    Assert.notNull(socketRoom, "This SocketRoom does not exist!");
+
+    return socketRoom.getSessions().stream().map(e -> e.getSession()).collect(Collectors.toList());
+  }
+
+  /**
+   * @Description 通过 session 获取房间号
+   * @param session
+   * @return java.lang.String
+   */
+  public static String getThisRoomNoBySession(Session session) {
+    SocketSession socketSession = socketSessionMap.get(session.getId());
+    Assert.notNull(socketSession, "This SocketSession does not exist!");
+
+    return socketSession.getRoomNo();
+  }
+
+  /**
+   * @Description 设置某房间答案
+   * @param roomNo
+   * @param answer
+   * @return void
+   */
+  public static void putAnswerToRoom(String roomNo, String answer) {
+    roomAnswerMap.put(roomNo, answer);
+  }
+
+  /**
+   * @Description 获取某房间答案
+   * @param roomNo
+   * @return java.lang.String
+   */
+  public static String getAnswerByRoomNo(String roomNo) {
+    return roomAnswerMap.get(roomNo);
+  }
 }
+

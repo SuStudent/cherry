@@ -15,6 +15,8 @@ public enum GameKeyEnum {
 
     START("START", "开始游戏"),
 
+    PLAYING("PLAYING", "游戏中..."),
+
     ARITHMETIC_DELIMITER(" ", "四则运算分割符"),
 
     MESSAGE_DELIMITER(">", "消息分割符");

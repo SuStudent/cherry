@@ -7,7 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MessageTypeEnum {
 
-  TEST("TEST", "测试");
+  TEST("TEST", "测试"),
+
+  MATH("MATH", "数学小程序");
 
   private final String type;
 

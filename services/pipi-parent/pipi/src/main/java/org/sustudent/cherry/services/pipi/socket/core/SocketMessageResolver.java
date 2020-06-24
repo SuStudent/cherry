@@ -1,5 +1,6 @@
 package org.sustudent.cherry.services.pipi.socket.core;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class SocketMessageResolver {
     return clazz;
   }
 
-  public static void handle(Session session,SocketMessage socketMessage) {
+  public static void handle(Session session,SocketMessage socketMessage) throws IOException, InterruptedException {
     Assert.notNull(session, "messageTypeEnum must not be null!");
     Assert.notNull(socketMessage, "socketMessage must not be null!");
     SocketMessageHandler socketMessageHandler = socketMessageHandlerMap.get(socketMessage.getType());
