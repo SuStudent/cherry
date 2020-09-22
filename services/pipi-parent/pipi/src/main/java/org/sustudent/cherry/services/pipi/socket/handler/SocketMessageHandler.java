@@ -1,14 +1,13 @@
 package org.sustudent.cherry.services.pipi.socket.handler;
 
-import javax.websocket.Session;
+import java.io.IOException;
 import org.sustudent.cherry.services.pipi.enums.MessageTypeEnum;
 import org.sustudent.cherry.services.pipi.socket.messages.SocketMessage;
-
-import java.io.IOException;
+import org.sustudent.cherry.services.pipi.socket.storage.SocketSession;
 
 public interface SocketMessageHandler {
 
-  void handle(Session session, SocketMessage socketMessage) throws IOException, InterruptedException;
+  void handle(SocketSession session, SocketMessage socketMessage) throws IOException;
 
   MessageTypeEnum supportType();
 }

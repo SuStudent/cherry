@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.sustudent.cherry.services.pipi.enums.MessageTypeEnum;
 import org.sustudent.cherry.services.pipi.socket.messages.SocketMessage;
+import org.sustudent.cherry.services.pipi.socket.storage.SocketSession;
 
 /**
  * @author yiyi.su
@@ -18,7 +19,7 @@ import org.sustudent.cherry.services.pipi.socket.messages.SocketMessage;
 public class TestSocketMessageHandler implements SocketMessageHandler {
 
   @Override
-  public void handle(Session session, SocketMessage socketMessage) {
+  public void handle(SocketSession session, SocketMessage socketMessage) {
     log.info("I'm receive. {}", socketMessage);
   }
 

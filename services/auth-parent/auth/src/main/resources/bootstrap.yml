@@ -19,6 +19,8 @@ encrypt:
     location: classpath:/jwt.jks
     alias: jwt
     password: cherry
-logging:
-  level:
-    root: info
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true

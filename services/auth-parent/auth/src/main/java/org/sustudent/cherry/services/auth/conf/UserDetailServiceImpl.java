@@ -42,7 +42,9 @@ public class UserDetailServiceImpl extends CherryUserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return userClientService.findUserByUsername(username).getData();
+    ResponseResult<CherryUser> cherryUser = userClientService.findUserByUsername(username);
+
+    return cherryUser.getData();
   }
 
   @Override

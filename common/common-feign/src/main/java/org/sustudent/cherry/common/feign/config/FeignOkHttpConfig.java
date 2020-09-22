@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.sustudent.cherry.common.feign.interceotor.OkHttpInterceptor;
 
 /**
  * Feign 使用Okhttp请求
@@ -32,7 +33,7 @@ public class FeignOkHttpConfig {
         .retryOnConnectionFailure(true)
         .connectionPool(new ConnectionPool())
         // 日志拦截器
-        //.addInterceptor(new LogInterceptor())
+        .addInterceptor(new OkHttpInterceptor())
         .build();
   }
 }

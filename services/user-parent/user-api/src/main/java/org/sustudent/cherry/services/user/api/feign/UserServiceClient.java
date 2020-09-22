@@ -26,4 +26,7 @@ public interface UserServiceClient {
 
   @PostMapping("/sysUser/findWxUserAndSave")
   ResponseResult<CherryUser> findWxUserAndSave(@RequestBody WxUser wxUser);
+
+  @GetMapping("/sysUser/findUserById")
+  ResponseResult<CherryUser> findUserById(@RequestBody Long userId);
 }

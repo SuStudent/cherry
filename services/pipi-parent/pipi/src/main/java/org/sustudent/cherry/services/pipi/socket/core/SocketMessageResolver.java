@@ -1,5 +1,6 @@
 package org.sustudent.cherry.services.pipi.socket.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.util.Assert;
 import org.sustudent.cherry.services.pipi.enums.MessageTypeEnum;
 import org.sustudent.cherry.services.pipi.socket.handler.SocketMessageHandler;
 import org.sustudent.cherry.services.pipi.socket.messages.SocketMessage;
+import org.sustudent.cherry.services.pipi.socket.storage.SocketStorageManage;
 
 /**
  * @author yiyi.su
@@ -31,6 +33,8 @@ public class SocketMessageResolver {
   private static final Map<MessageTypeEnum, Class<? extends SocketMessage>> socketMessageTypeMap = new HashMap<>();
 
   private static final Map<MessageTypeEnum, SocketMessageHandler> socketMessageHandlerMap = new HashMap<>();
+
+  private static final ObjectMapper objectMapper = new ObjectMapper();
 
   @Autowired
   public SocketMessageResolver(List<SocketMessageHandler> socketMessageHandlers) {
@@ -70,11 +74,16 @@ public class SocketMessageResolver {
     return clazz;
   }
 
-  public static void handle(Session session,SocketMessage socketMessage) throws IOException, InterruptedException {
+  public static void handle(Session session,SocketMessage socketMessage) throws IOException {
     Assert.notNull(session, "messageTypeEnum must not be null!");
     Assert.notNull(socketMessage, "socketMessage must not be null!");
     SocketMessageHandler socketMessageHandler = socketMessageHandlerMap.get(socketMessage.getType());
     Assert.notNull(socketMessageHandler, "messageTypeEnum not found !");
-    socketMessageHandler.handle(session,socketMessage);
+    socketMessageHandler.handle(SocketStorageManage.convertSession(session),socketMessage);
+  }
+
+  public static void sendMessage(Session session,SocketMessage socketMessage) throws IOException {
+    String message = objectMapper.writeValueAsString(socketMessage);
+    session.getBasicRemote().sendText(message);
   }
 }

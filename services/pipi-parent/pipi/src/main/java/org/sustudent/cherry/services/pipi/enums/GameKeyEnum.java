@@ -13,6 +13,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum GameKeyEnum {
 
+    COME_IN("COME_IN", "进入游戏"),
+
     START("START", "开始游戏"),
 
     PLAYING("PLAYING", "游戏中..."),

@@ -17,7 +17,7 @@ public class MathGameService {
      * @param
      * @return java.lang.String
      */
-    public String arithmeticString() {
+    public static String arithmeticString() {
 
         int a = (int) (Math.random() * 10 + 1);
         int b = (int) (Math.random() * 10 + 1);
@@ -27,7 +27,11 @@ public class MathGameService {
 
     }
 
-    public String getAnswerStr(String message) {
+    public static void main(String[] args) {
+        System.out.println(arithmeticString());
+    }
+
+    public static String getAnswerStr(String message) {
         String[] split = message.split(ARITHMETIC_DELIMITER.getKey());
         Integer first = Integer.valueOf(split[0]);
         String operator = split[1];

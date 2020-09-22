@@ -71,6 +71,10 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     user.setPhoto(wxUser.getAvatarUrl());
     return saveUser(user);
   }
+
+  public CherryUser getCherryUserById(Long userId) {
+    return sysUserCache.buildUser(super.getById(userId));
+  }
 }
 
 

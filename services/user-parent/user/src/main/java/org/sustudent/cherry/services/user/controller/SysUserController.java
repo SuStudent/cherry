@@ -3,6 +3,7 @@ package org.sustudent.cherry.services.user.controller;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +36,7 @@ public class SysUserController extends BaseController {
 
   @GetMapping("/findUserByUsername")
   public ResponseResult<CherryUser> findUserByUsername(@RequestParam String username) {
+    System.out.println( SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     return ResponseResult.success(sysUserService.findUserByUsername(username));
   }
 
@@ -42,6 +44,11 @@ public class SysUserController extends BaseController {
   public ResponseResult<CherryUser> findWxUserAndSave(@RequestBody WxUser wxUser){
     ContextUtils.mockLoginUser(1L);
     return ResponseResult.success(sysUserService.findWxUserAndSave(wxUser));
+  }
+
+  @GetMapping("/findUserById")
+  public ResponseResult<CherryUser> findUserById(@RequestBody Long userId){
+    return ResponseResult.success(sysUserService.getCherryUserById(userId));
   }
 
   @GetMapping("/test01")

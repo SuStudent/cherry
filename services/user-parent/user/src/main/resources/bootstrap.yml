@@ -16,3 +16,8 @@ spring:
           enabled: true
   main:
     allow-bean-definition-overriding: true
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true

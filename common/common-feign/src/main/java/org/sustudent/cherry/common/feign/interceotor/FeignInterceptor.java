@@ -13,14 +13,20 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Configuration
 public class FeignInterceptor implements RequestInterceptor {
 
-  private static final String TOKEN_HEADER = "authorization";
+  private static final String TOKEN_HEADER = "Authorization";
 
 
   @Override
   public void apply(RequestTemplate requestTemplate) {
     HttpServletRequest request = getHttpServletRequest();
     if (request != null) {
-      requestTemplate.header(TOKEN_HEADER, getHeaders(request).get(TOKEN_HEADER));
+      getHeaders(request).forEach((k,v) -> {
+        if(k.equalsIgnoreCase(TOKEN_HEADER)) {
+          requestTemplate.header(TOKEN_HEADER, v);
+        }
+      });
+
+
     }
   }
 

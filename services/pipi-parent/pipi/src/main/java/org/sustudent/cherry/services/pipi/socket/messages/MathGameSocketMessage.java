@@ -1,6 +1,7 @@
 package org.sustudent.cherry.services.pipi.socket.messages;
 
 import lombok.Data;
+import org.sustudent.cherry.common.security.model.CherryUser;
 import org.sustudent.cherry.services.pipi.enums.MessageTypeEnum;
 
 /**
@@ -21,6 +22,8 @@ public class MathGameSocketMessage extends SocketMessage {
     private boolean correctOrWrong;     //后台 答案是否正确
 
     private Integer countdown;          //后台 倒计时
+
+    private CherryUser user;
 
     @Override
     public MessageTypeEnum getType() {
